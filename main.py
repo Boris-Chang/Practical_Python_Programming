@@ -20,3 +20,44 @@ pickle.dump
 (
  [alphabet_s2t_dict,alphabet_t2s_dict],
  open('key.dat','wb')
+    
+#convert_char()函数
+def convert_char(single_char:str,operation:str)->str:
+    '''对单个字符进行加密/解密
+    输入参数：
+    single_char:要加密/解密的单个字符
+    operation：'encrypt'->加密；'decrypt'->解密
+    返回结果：加密/解密后的单个字符
+    '''
+    result = ''
+    if ord(single_char) >= 33 and ord(single_char) <= 126:
+        if operation == 'encrypt':
+            result = alphabet_s2t_dict[single_char]
+        elif operation == 'decrypt':
+            result = alphabet_t2s_dict[single_char]
+    else:
+        result = single_char
+    return result
+#加密程序
+def encrypt_it(scr_str:str)->str:
+    '''用于对字符串进行简单替换加密
+    输入参数：
+    scr_str:原始文本
+    返回结果：加密文本
+    '''
+    encrypt_str=''
+    for single_char in scr_str:
+        encrypt_str += convert_char(single_char,'encrypt')
+    return encrypt_str
+#解密程序
+def decrypt_it(encrypt_str:str)->str:
+    '''用于对加密字符串进行简单替换解密
+    输入参数：
+    encrypt_str:加密文本内容
+    返回结构：解密文本
+    '''
+    decrypt_str=''
+    for single_char in encrypt_str:
+        decrypt_str += convert_char(single_char,'decrypt')
+    return decrypt_str
+
